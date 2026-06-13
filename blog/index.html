@@ -1,0 +1,39 @@
+---
+layout: base
+title: Writing
+permalink: /blog/
+---
+<style>
+  .blog-hero{max-width:720px;margin:0 auto;padding:72px 24px 8px;}
+  .blog-hero h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:42px;line-height:1.06;letter-spacing:-0.02em;margin:14px 0 12px;color:var(--text);}
+  .blog-hero p{font-size:18px;color:var(--muted);max-width:560px;margin:0;}
+
+  .post-list{max-width:720px;margin:0 auto;padding:36px 24px 0;}
+  .post-item{display:block;padding:26px 0;border-top:1px solid var(--border);transition:opacity .2s;}
+  .post-item:hover{text-decoration:none;}
+  .post-item:hover .pi-title{color:var(--accent);}
+  .pi-meta{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:var(--faint);margin-bottom:8px;}
+  .pi-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:23px;letter-spacing:-0.01em;color:var(--text);margin:0 0 7px;transition:color .2s;}
+  .pi-excerpt{font-size:15.5px;line-height:1.6;color:var(--muted);margin:0;}
+  .empty{max-width:720px;margin:0 auto;padding:36px 24px;color:var(--muted);font-size:16px;}
+</style>
+
+<section class="blog-hero">
+  <div class="eyebrow">WRITING / NOTES</div>
+  <h1>thinking out loud.</h1>
+  <p>Occasional notes on product, finance, and what I'm learning while building <span class="mezzo">mezzo</span>.</p>
+</section>
+
+<div class="post-list">
+  {% for post in site.posts %}
+  <a class="post-item" href="{{ post.url | relative_url }}">
+    <div class="pi-meta">{{ post.date | date: "%B %-d, %Y" }}{% if post.tags.size > 0 %} · {{ post.tags | join: " · " }}{% endif %}</div>
+    <h2 class="pi-title">{{ post.title }}</h2>
+    <p class="pi-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
+  </a>
+  {% endfor %}
+
+  {% if site.posts.size == 0 %}
+  <p class="empty">No posts yet — check back soon.</p>
+  {% endif %}
+</div>

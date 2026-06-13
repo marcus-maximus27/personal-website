@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title %}{{ page.title }} — Marcus Maximus{% else %}Writing — Marcus Maximus{% endif %}</title>
+<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 150 }}{% else %}Notes on product, finance, and building mezzo.{% endif %}">
+<meta name="author" content="Marcus Maximus">
+<meta name="theme-color" content="#241B16">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23C26B4A'/%3E%3Ctext x='50' y='70' font-family='Arial,sans-serif' font-size='62' font-weight='700' fill='%23F7F3EC' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}Writing — Marcus Maximus{% endif %}">
+<meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 150 }}{% else %}Notes on product, finance, and building mezzo.{% endif %}">
+<meta property="og:image" content="https://marcusmaximus.ca/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('mm_theme');
+    if(t !== 'light' && t !== 'dark'){
+      t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    var r = document.documentElement;
+    if(t === 'dark'){ r.setAttribute('data-theme','dark'); r.style.backgroundColor = '#231A14'; }
+    else { r.removeAttribute('data-theme'); r.style.backgroundColor = '#F4EADB'; }
+  } catch(e){}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Aleo:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  :root{
+    --text:#26211C; --muted:#5F564C; --faint:#8B8170; --accent:#9E4B2E;
+    --surface:#FFFFFF; --surface-2:#FBF3EA; --border:rgba(38,33,28,0.10);
+    --border-strong:rgba(38,33,28,0.17); --hover:rgba(38,33,28,0.05);
+    --page:#F4EADB; --navpill:rgba(247,243,236,0.86); --code-bg:#F2ECE1;
+  }
+  html[data-theme="dark"]{
+    --text:#F2E6D6; --muted:#B7AB9A; --faint:#9A8E7C; --accent:#E0A878;
+    --surface:#2C2219; --surface-2:#332720; --border:rgba(247,237,225,0.12);
+    --border-strong:rgba(247,237,225,0.20); --hover:rgba(247,237,225,0.06);
+    --page:#231A14; --navpill:rgba(34,26,20,0.88); --code-bg:#332720;
+  }
+  html{background:var(--page);scroll-behavior:smooth;transition:background-color .55s ease;}
+  body{background:var(--page);color:var(--text);font-family:'Space Grotesk',sans-serif;line-height:1.6;transition:background-color .55s ease, color .55s ease;-webkit-font-smoothing:antialiased;}
+  ::selection{background:#C26B4A;color:#F7F3EC;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px;}
+
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:var(--navpill);border-bottom:1px solid var(--border);transition:background .55s ease, border-color .55s ease;}
+  .topbar-inner{max-width:720px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:center;gap:11px;color:var(--text);font-weight:600;font-size:15px;}
+  .brand:hover{text-decoration:none;}
+  .brand .m{width:30px;height:30px;border-radius:8px;background:#C26B4A;display:flex;align-items:center;justify-content:center;color:#F7F3EC;font-weight:700;font-size:14px;flex:none;}
+  .brand .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint);}
+
+  /* theme switch */
+  .theme-switch{position:relative;width:52px;height:28px;border-radius:100px;background:var(--surface-2);border:1px solid var(--border);cursor:pointer;flex:none;}
+  .theme-knob{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;transition:transform .5s cubic-bezier(.34,1.35,.5,1);}
+  html[data-theme="dark"] .theme-knob{transform:translateX(24px);}
+  .theme-ico{position:absolute;display:flex;transition:opacity .35s ease, transform .5s cubic-bezier(.4,0,.2,1);}
+  .theme-sun{opacity:1;transform:rotate(0) scale(1);color:#C26B4A;}
+  .theme-moon{opacity:0;transform:rotate(-80deg) scale(.5);color:#E8B98C;}
+  html[data-theme="dark"] .theme-sun{opacity:0;transform:rotate(80deg) scale(.5);}
+  html[data-theme="dark"] .theme-moon{opacity:1;transform:rotate(0) scale(1);}
+
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;}
+  .mezzo{font-family:'Aleo',serif;font-style:italic;font-weight:700;}
+
+  footer{border-top:1px solid var(--border);margin-top:80px;}
+  .footer-inner{max-width:720px;margin:0 auto;padding:34px 24px 56px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint);}
+  .footer-inner a{color:var(--faint);}
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">
+        <span class="m">M</span>
+        <span>Marcus Maximus <span class="back">/ writing</span></span>
+      </a>
+      <div class="theme-switch" id="themeSwitch" role="button" aria-label="Toggle light or dark mode" title="Toggle light / dark">
+        <div class="theme-knob">
+          <svg class="theme-ico theme-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <svg class="theme-ico theme-moon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{ content }}
+
+  <footer>
+    <div class="footer-inner">
+      <span>© {{ 'now' | date: "%Y" }} Marcus Maximus</span>
+      <span><a href="/">Home</a> · <a href="https://www.linkedin.com/in/marcusreyes/">LinkedIn</a> · <a href="mailto:marcusreyes1027@gmail.com">Email</a></span>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var sw = document.getElementById('themeSwitch');
+      if(!sw) return;
+      sw.addEventListener('click', function(){
+        var r = document.documentElement;
+        var dark = r.getAttribute('data-theme') === 'dark';
+        if(dark){ r.removeAttribute('data-theme'); r.style.backgroundColor = '#F4EADB'; document.body.style.backgroundColor='#F4EADB'; }
+        else { r.setAttribute('data-theme','dark'); r.style.backgroundColor = '#231A14'; document.body.style.backgroundColor='#231A14'; }
+        try { localStorage.setItem('mm_theme', dark ? 'light' : 'dark'); } catch(e){}
+      });
+    })();
+  </script>
+</body>
+</html>

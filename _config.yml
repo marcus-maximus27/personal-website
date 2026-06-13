@@ -1,0 +1,22 @@
+title: Marcus Maximus
+description: Notes on product, finance, and building mezzo.
+url: "https://marcusmaximus.ca"
+baseurl: ""
+
+# Pretty URLs: a post titled my-first-post lands at /blog/my-first-post/
+permalink: /blog/:title/
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+timezone: America/Toronto
+
+# Don't let Jekyll touch these (your hand-built homepage + assets stay verbatim)
+exclude:
+  - README.md
+  - Marcus-Maximus-Resume.pdf
+keep_files:
+  - index.html
+  - og.png
+  - CNAME
+  - Marcus-Maximus-Resume.pdf
