@@ -19,8 +19,8 @@ Personal site. Static, no build step.
 | `.nojekyll` | Skips Jekyll processing |
 | `robots.txt`, `sitemap.xml` | Crawling |
 
-One external dependency at runtime: the Calendly widget script (loaded from their CDN). Everything else works offline.
+Runtime dependencies loaded from CDNs: three.js (unpkg) for the 3D scene, and the Calendly widget (loaded only when someone books a call).
 
 ## Editing
 
-`index.html` is compiled output — do not edit it. Edit the source design and re-export.
+`index.html` is compiled output. Do not edit it. Edit `Marcus Reyes v12 Cockpit 3D.dc.html` and re-export.
